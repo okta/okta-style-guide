@@ -1,0 +1,8 @@
+# Shared configurations
+#
+# File changes to the references below must be approved by the following parties.
+# Any change to shared code will notify each CODEOWNER for a PR approval or rejection.
+# It is the responsibility of the CODEOWNER to respond to this PR within 48 hours
+# (excluding weekends) with either an APPROVAL or CHANGES REQUESTED response.
+# PRs will be blocked if one or more CODEOWNERs reject to the changes.
+/Style/ @jmelberg-okta @IldarAbdullin-okta @blairmitchelmore-okta @stevelind-okta @umangshah-okta
