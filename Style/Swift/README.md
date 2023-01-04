@@ -44,6 +44,7 @@ To adopt these rules, embed the [`.swiftlint.yml`](/Swift/.swiftlint.yml) file i
     - [Collection Element Alignment](#collection-element-alignment)
     - [Control Statement](#control-statement)
     - [File Header](#file-header)
+    - [Implicit Return](#implicit-return)
 - [Lint](#lint)
     - [AnyObject Protocol](#anyobject-protocol)
     - [Class Delegate Protocol](#class-delegate-protocol)
@@ -2368,6 +2369,148 @@ do {
 ![SwiftLint: file_header](https://img.shields.io/badge/SwiftLint-file_header-007A87.svg)
 
 Header comments should be consistent with project patterns. The `SWIFTLINT_CURRENT_FILENAME` placeholder can optionally be used in the required and forbidden patterns. It will be replaced by the real file name.
+
+### Implicit Return
+
+![SwiftLint: implicit_return](https://img.shields.io/badge/SwiftLint-implicit_return-007A87.svg)
+
+Prefer implicit returns in closures, functions and getters.
+
+**Example:**
+
+<details>
+<summary>Correct</summary>
+
+```swift
+if foo {
+  return 0
+}
+```
+
+```swift
+foo.map { $0 + 1 }
+```
+
+```swift
+foo.map({ $0 + 1 })
+```
+
+```swift
+foo.map { value in value + 1 }
+```
+
+```swift
+[1, 2].first(where: {
+    true
+})
+```
+
+```swift
+func foo() -> Int {
+    0
+}
+```
+
+```swift
+class Foo {
+    func foo() -> Int { 0 }
+}
+```
+
+```swift
+func fetch() -> Data? {
+    do {
+        return try loadData()
+    } catch {
+        return nil
+    }
+}
+```
+
+```swift
+var foo: Bool { true }
+```
+
+```swift
+class Foo {
+    var bar: Int {
+        get {
+            0
+        }
+    }
+}
+```
+
+```swift
+class Foo {
+    static var bar: Int {
+        0
+    }
+}
+```
+
+</details>
+
+<details>
+<summary>Incorrect</summary>
+
+```swift
+foo.map { value in
+    return value + 1
+}
+```
+
+```swift
+foo.map {
+    return $0 + 1
+}
+```
+
+```swift
+foo.map({ return $0 + 1})
+```
+
+```swift
+[1, 2].first(where: {
+    return true
+})
+```
+
+```swift
+func foo() -> Int {
+    return 0
+}
+```
+
+```swift
+class Foo {
+    func foo() -> Int { return 0 }
+}
+```
+
+```swift
+var foo: Bool { return true }
+```
+
+```swift
+class Foo {
+    var bar: Int {
+        get {
+            return 0
+        }
+    }
+}
+```
+
+```swift
+class Foo {
+    static var bar: Int {
+        return 0
+    }
+}
+```
+
+</details>
 
 ## Lint
 
