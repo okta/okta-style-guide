@@ -10,10 +10,3 @@ This style guide outlines the coding conventions of the Android, iOS, and Deskto
 ## Principles
 
 - [Swift vs Objective C](/Principles/swift_vs_objc.md)
-
-# CI System: CircleCI
-
-Please check out this [wiki](https://oktawiki.atlassian.net/wiki/spaces/ESS/pages/2670692460/Circle+CI+User+Guide)
-for more information about getting onboarded to CircleCI at Okta.
-
-Your CircleCI project is found [here](https://app.circleci.com/pipelines/github/okta/okta-style-guide).
