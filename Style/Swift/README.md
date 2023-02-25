@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This document outlines Okta's Swift lint rules, containing examples from the [SwiftLint Rule documentation](https://github.com/realm/SwiftLint/blob/master/Rules.md).
+This document outlines Okta's Swift lint rules, containing examples from the [SwiftLint Rule documentation](https://realm.github.io/SwiftLint/rule-directory.html).
 
 To adopt these rules, embed the [`.swiftlint.yml`](/Swift/.swiftlint.yml) file into your project.
 
@@ -48,6 +48,7 @@ To adopt these rules, embed the [`.swiftlint.yml`](/Swift/.swiftlint.yml) file i
 - [Lint](#lint)
     - [AnyObject Protocol](#anyobject-protocol)
     - [Class Delegate Protocol](#class-delegate-protocol)
+    - [Weak Delegate](#weak-delegate)
     - [Cyclomatic Complexity](#cyclomatic-complexity)
 
 <!-- /TOC -->
@@ -2619,6 +2620,141 @@ protocol FooDelegate: NSObjectProtocol {}
 
 ```swift
 ↓protocol FooDelegate: Bar {}
+```
+
+</details>
+
+### Weak Delegate
+    
+![SwiftLint: weak_delegate](https://img.shields.io/badge/SwiftLint-weak_delegate-007A87.svg)
+    
+Delegates should be weak to avoid reference cycles.
+ 
+**Example:** 
+    
+<details>
+<summary>Correct</summary>
+
+```swift
+class Foo {
+    weak var delegate: SomeProtocol?
+}
+```
+
+```swift
+class Foo {
+    weak var someDelegate: SomeDelegateProtocol?
+}
+```
+
+```swift
+class Foo {
+    weak var delegateScroll: ScrollDelegate?
+}
+```
+
+```swift
+class Foo {
+    var scrollHandler: ScrollDelegate?
+}
+```
+
+```swift
+func foo() {
+    var delegate: SomeDelegate
+}
+```
+
+```swift
+class Foo {
+    var delegateNotified: Bool?
+}
+```
+
+```swift 
+protocol P {
+    var delegate: AnyObject? { get set }
+}
+```
+
+```swift 
+class Foo {
+    protocol P {
+        var delegate: AnyObject? { get set }
+    }
+}
+```
+
+```swift
+class Foo {
+    var computedDelegate: ComputedDelegate {
+        return bar() 
+    } 
+}
+```
+
+```swift
+class Foo {
+    var computedDelegate: ComputedDelegate {
+        get {
+            return bar()
+        }
+    }
+}
+```
+
+```swift
+struct Foo {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate 
+}
+```
+
+```swift
+struct Foo {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate 
+}
+```
+
+```swift
+struct Foo {
+    @WKExtensionDelegateAdaptor(ExtensionDelegate.self) var extensionDelegate 
+}
+```
+
+```swift
+class Foo {
+    func makeDelegate() -> SomeDelegate {
+        let delegate = SomeDelegate()
+        return delegate
+    }
+}
+```
+
+</details>
+
+<details>
+<summary>Incorrect</summary>
+
+```swift
+class Foo {
+    ↓var delegate: SomeProtocol?
+}
+```
+
+```swift
+class Foo {
+    ↓var scrollDelegate: ScrollDelegate?
+}
+```
+
+```swift
+class Foo {
+    ↓var delegate: SomeProtocol? {
+        didSet {
+            print("Updated delegate")
+        }
+    }
+}
 ```
 
 </details>
